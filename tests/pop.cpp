@@ -10,10 +10,11 @@ SCENARIO("when you pop an element count decreases")
 		stack1.push(2);
                 WHEN("pop an element")
                 {
-                        stack1.pop();
+                        int a = stack1.pop();
                         THEN("the number of elements must be equal to 1")
                         {
                                 REQUIRE(stack1.count() == 1);
+				REQUIRE(a == 2);
                         }
                 }
         }
