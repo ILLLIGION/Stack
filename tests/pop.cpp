@@ -18,5 +18,17 @@ SCENARIO("when you pop an element count decreases")
                         }
                 }
         }
+	GIVEN("Empty Stack")
+	{
+		Stack<int> stack2;
+		WHEN("pop an elemet")
+		{
+			stack2.pop();
+			THEN("nothing really happens, count is still 0")
+			{
+				REQUIRE(stack2.count() == 0);
+			}
+		}
+	}
 }
 

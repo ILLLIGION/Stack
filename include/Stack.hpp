@@ -30,6 +30,7 @@ public:
 	T pop()
 	{
 		if(count_) return array_[count_--];
+		else std::cout << "The stack in already empty" << std::endl;
 	}
 	~Stack()
 	{
