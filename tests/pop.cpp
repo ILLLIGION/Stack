@@ -18,14 +18,17 @@ SCENARIO("when you pop an element count decreases")
                         }
                 }
         }
+}
+SCENARIO("when you try to pop an element from an empty stack count must stay 0 and throw an exception")
+{
 	GIVEN("Empty Stack")
 	{
 		Stack<int> stack2;
 		WHEN("pop an elemet")
 		{
-			stack2.pop();
 			THEN("nothing really happens, count is still 0")
 			{
+				REQUIRE_THROWS_AS(stack2.pop(), l_error);
 				REQUIRE(stack2.count() == 0);
 			}
 		}

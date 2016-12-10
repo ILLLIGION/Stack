@@ -1,6 +1,13 @@
 #include <exception>
 #include <cstring>
 #include <iostream>
+#include <exception>
+
+struct l_error : public std::logic_error
+{
+public:
+	l_error(const std::string& data): logic_error(data) {}
+};
 
 template <typename T>
 class Stack
@@ -30,7 +37,7 @@ public:
 	T pop()
 	{
 		if(count_) return array_[count_--];
-		else std::cout << "The stack in already empty" << std::endl;
+		if(count_ == 0) throw l_error("stack is empty"); 
 	}
 	~Stack()
 	{
