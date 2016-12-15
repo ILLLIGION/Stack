@@ -1,4 +1,3 @@
-#include <exception>
 #include <cstring>
 #include <iostream>
 #include <exception>
@@ -14,11 +13,11 @@ class Stack
 {
 public:
 	Stack(): array_(nullptr), array_size_(0), count_(0) {}
-	size_t count() const
+	size_t count() const noexcept
 	{
 		return count_;
 	}
-	void push(T const& elem_)
+	void push(T const& elem_) noexcept
 	{
 		if (count_ == array_size_)
 		{
@@ -34,10 +33,18 @@ public:
 		}
 		array_[++count_] = elem_;
 	}	
-	T pop()
+	void pop() noexcept
 	{
-		if(count_) return array_[count_--];
-		if(count_ == 0) throw l_error("stack is empty"); 
+		if(count_) count_--;
+	}
+	T* top() const noexcept
+	{
+		if(count_) return &array_[count_ - 1];
+		else return nullptr;
+	}
+	bool empty() const noexcept
+	{
+		return !count_;
 	}
 	~Stack()
 	{

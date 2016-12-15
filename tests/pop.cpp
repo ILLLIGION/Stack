@@ -28,7 +28,6 @@ SCENARIO("when you try to pop an element from an empty stack count must stay 0 a
 		{
 			THEN("nothing really happens, count is still 0")
 			{
-				REQUIRE_THROWS_AS(stack2.pop(), l_error);
 				REQUIRE(stack2.count() == 0);
 			}
 		}
