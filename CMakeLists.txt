@@ -7,4 +7,4 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include/)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/tests/)
 
 add_executable(main ${CMAKE_CURRENT_SOURCE_DIR}/examples/main.cpp)
-add_executable(tests ${TESTS_SOURCE} tests/main.cpp tests/push.cpp tests/pop.cpp tests/count.cpp)
+add_executable(tests ${TESTS_SOURCE} tests/main.cpp tests/push.cpp tests/pop.cpp tests/count.cpp tests/top.cpp)

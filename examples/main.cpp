@@ -11,8 +11,8 @@ int main()
     stack1.push(3);
     std::cout << stack1.count() << std::endl;
 
-    int a = stack1.pop();
-    std::cout << "poped number must be 3: " << a << std::endl;
+    //int a = stack1.pop();
+    //std::cout << "poped number must be 3: " << a << std::endl;
     std::cout << stack1.count() << std::endl;
     return 0;
 }

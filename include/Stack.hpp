@@ -1,57 +1,59 @@
-#include <cstring>
 #include <iostream>
 #include <exception>
+#include <Allocator.hpp>
 
-struct l_error : public std::logic_error
+template <typename T>
+class Stack: private Allocator<T>
 {
 public:
-	l_error(const std::string& data): logic_error(data) {}
+	Stack(size_t size = 0);
+	auto count() const noexcept -> size_t;
+	auto push(T const& elem_) noexcept -> void;
+	auto pop() noexcept -> void;
+	auto top() const /*strong*/ -> T;
+	auto empty() const noexcept -> bool;
 };
 
 template <typename T>
-class Stack
+Stack<T>::Stack(size_t size) : Allocator<T>(size) {}
+
+template <typename T>
+auto Stack<T>::count() const noexcept -> size_t
 {
-public:
-	Stack(): array_(nullptr), array_size_(0), count_(0) {}
-	size_t count() const noexcept
-	{
-		return count_;
-	}
-	void push(T const& elem_) noexcept
-	{
-		if (count_ == array_size_)
-		{
-			if (array_size_ == 0) array_size_ = 1;
-			else array_size_*=2;
-			T* new_array_ = new T[array_size_];
-			for (int i=0; i<count_; i++)
-			{
-				new_array_[i] = array_[i];
-			}
-			delete[] array_;
-			array_ = new_array_; 
-		}
-		array_[++count_] = elem_;
-	}	
-	void pop() noexcept
-	{
-		if(count_) count_--;
-	}
-	T* top() const noexcept
-	{
-		if(count_) return &array_[count_ - 1];
-		else return nullptr;
-	}
-	bool empty() const noexcept
-	{
-		return !count_;
-	}
-	~Stack()
-	{
-		delete[] array_;
-	}
-private:
-	T* array_;
-	size_t array_size_;
-	size_t count_;
-};
+    return Allocator<T>::count_;
+}
+
+template <typename T>
+auto Stack<T>::push(const T & element) noexcept -> void
+{
+    try
+    {
+        Allocator<T>::allocate();
+        Allocator<T>::ptr_[Allocator<T>::count_] = element;
+        Allocator<T>::count_++;
+    }
+    catch (...) {}
+}
+
+template <typename T>
+auto Stack<T>::pop() noexcept -> void
+{
+    if (Allocator<T>::count_)
+        Allocator<T>::count_--;
+}
+
+template <typename T>
+auto Stack<T>::top() const /* strong */ -> T
+{
+    if (Allocator<T>::count_)
+        return Allocator<T>::ptr_[Allocator<T>::count_ - 1];
+    else
+        throw std::underflow_error("Stack is already empty.");
+}
+
+template <typename T>
+auto Stack<T>::empty() const noexcept -> bool
+{
+    return !Allocator<T>::count_;
+}
+
